@@ -1,0 +1,8 @@
+<gridster *ngIf="options && dashboard" [options]="options" class="h-[100%]">
+  <gridster-item class="h-[100%]" [item]="item" *ngFor="let item of dashboard;let i = index">
+    <!-- your content here -->
+    <div class="h-[100%]">TEST {{i}}
+    <app-charts class="h-[100%]"></app-charts>
+    </div>
+  </gridster-item>
+</gridster>
