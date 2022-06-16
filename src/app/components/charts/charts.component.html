@@ -1,4 +1,13 @@
-<section class="p-5 h-[100%]">
-  <app-bar-chart class="h-[100%]"></app-bar-chart>
+<section class="p-3 h-[100%]">
+
+  <h1 class="text-[20px] font-semibold p-1 text-center" [innerHTML]="section.sectionName"></h1>
+
+  <app-pie-chart class="h-[100%]" *ngIf="section.format === 'Pie Chart' ||
+   section.format =='Doughnut Chart'" [section]="section"></app-pie-chart>
+
+  <app-line-chart class="h-[100%]" *ngIf="section.format === 'Line Chart'" [section]="section"></app-line-chart>
+
+  <app-bar-chart class="h-[100%]" *ngIf="section.format === 'Vertical Bar Chart'
+|| section.format === 'Horizontal Bar Chart'" [section]="section"></app-bar-chart>
 </section>
 

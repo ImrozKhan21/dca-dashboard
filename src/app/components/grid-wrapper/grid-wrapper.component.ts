@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {DisplayGrid, GridsterConfig, GridsterItem, GridType} from "angular-gridster2";
 import {ISection} from "../../models/common.model";
 import {combineLatest, Observable, take} from "rxjs";
@@ -7,7 +7,8 @@ import {ApiCallsService} from "../../services/api-calls.service";
 @Component({
   selector: 'app-grid-wrapper',
   templateUrl: './grid-wrapper.component.html',
-  styleUrls: ['./grid-wrapper.component.scss']
+  styleUrls: ['./grid-wrapper.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GridWrapperComponent implements OnInit {
   @Input() sectionDetails: ISection[];
@@ -17,7 +18,7 @@ export class GridWrapperComponent implements OnInit {
   dashboardsOverviewSectionsDetails: ISection[];
 
 
-  constructor(private apiCallsService: ApiCallsService) {
+  constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef) {
   }
 
   static itemChange(item: any, itemComponent: any) {
@@ -31,15 +32,30 @@ export class GridWrapperComponent implements OnInit {
   ngOnInit() {
     this.setGridOptions();
     this.setToolSectionsAndGetDetails();
+  }
 
-    this.dashboard = [
-      {cols: 2, rows: 2, y: 0, x: 0},
-      {cols: 2, rows: 2, y: 0, x: 2},
-      {cols: 4, rows: 4, y: 0, x: 4},
-      {cols: 2, rows: 2, y: 2, x: 0},
-      {cols: 2, rows: 2, y: 2, x: 2}
-    ];
-    console.table(this.dashboard);
+  setGridOptions() {
+    this.options = {
+      gridType: GridType.ScrollVertical,
+      displayGrid: DisplayGrid.OnDragAndResize,
+      margin: 10,
+      outerMargin: true,
+      outerMarginTop: null,
+      outerMarginRight: null,
+      outerMarginBottom: null,
+      outerMarginLeft: null,
+      keepFixedHeightInMobile: false,
+      draggable: {
+        enabled: false,
+        dropOverItems: true
+      },
+      resizable: {
+        enabled: true
+      },
+      pushItems: true,
+      pushResizeItems: true,
+      swapWhileDragging: true
+    };
   }
 
   setToolSectionsAndGetDetails() {
@@ -52,28 +68,37 @@ export class GridWrapperComponent implements OnInit {
       allObs.push(obs);
     })
     combineLatest(allObs).pipe(take(1)).subscribe(values => {
-      console.log('111 VALUES', values);
       this.dashboardsOverviewSectionsDetails = this.sectionDetails.map((section, i) => {
         return {...section, details: values[i]};
       });
-
-      console.log('1111 dashboardsOverviewSectionsDetails', this.dashboardsOverviewSectionsDetails);
-    //  this.appStateService.toolsOverview[this.toolId] = this.toolsOverviewSectionsDetails;
-    //  this.changeDetectorRef.detectChanges();
+      this.createDashboard();
+      this.changeDetectorRef.detectChanges();
     });
   }
 
-  setGridOptions() {
-    this.options = {
-      gridType: GridType.Fit,
-      displayGrid: DisplayGrid.OnDragAndResize,
-      margin: 10,
-      outerMargin: true,
-      outerMarginTop: null,
-      outerMarginRight: null,
-      outerMarginBottom: null,
-      outerMarginLeft: null
-    };
+  createDashboard() {
+    console.log('1111 dashboardsOverviewSectionsDetails', this.dashboardsOverviewSectionsDetails);
+
+    const dashboard = [
+      {cols: 4, rows: 2, y: 0, x: 0},
+      {cols: 2, rows: 2, y: 0, x: 4},
+      {cols: 2, rows: 2, y: 0, x: 6},
+      {cols: 4, rows: 2, y: 2, x: 0},
+      {cols: 2, rows: 2, y: 2, x: 4},
+      {cols: 2, rows: 2, y: 2, x: 6},
+      {cols: 4, rows: 2, y: 4, x: 0},
+      {cols: 4, rows: 2, y: 4, x: 4},
+      {cols: 4, rows: 2, y: 6, x: 0},
+      {cols: 4, rows: 2, y: 6, x: 4}
+    ];
+    this.dashboard = this.dashboardsOverviewSectionsDetails.map((item, index) => {
+      const lastItem = dashboard[index-1];
+      const {cols, rows, y, x} = dashboard[index] ? dashboard[index]
+        : {cols: 4, rows: 2, y: (lastItem.y + 2), x: lastItem.x ? 0 : lastItem.x + 4};
+
+      return {cols, rows: rows, y, x }
+    })
+    console.table(this.dashboard);
   }
 
   changedOptions() {

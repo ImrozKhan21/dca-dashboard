@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Color} from "@swimlane/ngx-charts";
+import {ISection} from "../../../models/common.model";
 
 @Component({
   selector: 'app-bar-chart',
@@ -7,8 +8,9 @@ import {Color} from "@swimlane/ngx-charts";
   styleUrls: ['./bar-chart.component.scss']
 })
 export class BarChartComponent implements OnInit {
-  @Input() yAxisLabel: string = 'Country';
-  @Input() xAxisLabel: string = 'Population';
+  @Input() section: ISection;
+  @Input() yAxisLabel: string = '';
+  @Input() xAxisLabel: string = '';
   @Input() view: [number, number] = [600, 300]; // width , height
   showYAxisLabel: boolean = true;
   showXAxis: boolean = true;
@@ -16,18 +18,8 @@ export class BarChartComponent implements OnInit {
   gradient: boolean = false;
   showLegend: boolean = true;
   showXAxisLabel: boolean = true;
-  data = [{
-    "name": "Germany",
-    "value": 8940000
-  },
-    {
-      "name": "USA",
-      "value": 5000000
-    },
-    {
-      "name": "France",
-      "value": 7200000
-    }];
+  data: any;
+  details: any;
 
   constructor() {
   }
@@ -37,14 +29,37 @@ export class BarChartComponent implements OnInit {
   }
 
   onActivate(data: any): void {
-   // console.log('Activate', JSON.parse(JSON.stringify(data)));
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
   onDeactivate(data: any): void {
-  //  console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+    //  console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
   ngOnInit(): void {
+    this.details = this.section.details;
+    this.yAxisLabel  = this.details[0]['Y-axis'];
+    this.xAxisLabel  = this.details[0]['X-axis'];
+    this.data = this.details.filter((item: any) => item['Value']);
+    const totalSeriesCount: number = this.details[0]['TotalDataSeriesCount'];
+    this.data = this.details.map((item: any) => {
+      if (totalSeriesCount > 1) {
+        let series: any[] = [];
+        for (let i = 1; i <= totalSeriesCount; i++) {
+          const valueForDataSeries = `DataSeries-${i}`;
+          const labelForDataSeries = `LabelDataSeries-${i}`;
+          series.push({name: item[labelForDataSeries], value: item[valueForDataSeries]})
+        }
+        return {
+          "name": item['Value'] || 'None',
+          "series": series
+        }
+      }
+      return {
+        "name": item['Value'] || 'None',
+        "value": item['DataSeries-1']
+      }
+    });
   }
 
 }

@@ -5,13 +5,25 @@ import {GridsterModule} from "angular-gridster2";
 import {ChartsModule} from "./charts/charts.module";
 import { DashboardWrapperComponent } from './dashboard-wrapper/dashboard-wrapper.component';
 import {TabMenuModule} from "primeng/tabmenu";
+import { ProfileComponent } from './profile/profile.component';
+import { TableComponent } from './table/table.component';
+import { ParagraphComponent } from './paragraph/paragraph.component';
+import { CountsComponent } from './counts/counts.component';
+import { VideoCardComponent } from './video-card/video-card.component';
+import {TableModule} from "primeng/table";
+import {PipesModule} from "../pipes/pipes.module";
 
 
 
 @NgModule({
   declarations: [
     GridWrapperComponent,
-    DashboardWrapperComponent
+    DashboardWrapperComponent,
+    ProfileComponent,
+    TableComponent,
+    ParagraphComponent,
+    CountsComponent,
+    VideoCardComponent
   ],
     exports: [
         GridWrapperComponent,
@@ -21,7 +33,9 @@ import {TabMenuModule} from "primeng/tabmenu";
     CommonModule,
     GridsterModule,
     ChartsModule,
-    TabMenuModule
+    TabMenuModule,
+    TableModule,
+    PipesModule
   ]
 })
 export class ComponentsModule { }

@@ -1,0 +1,16 @@
+<section class="h-[100%]">
+  <div class="w-[100%] m-auto">
+    <div class="m-auto" id="player">
+      <iframe
+        class="m-auto w-[100%] sm:w-[100%] md:w-[100%] lg:w-[100%] lg:h-[400px] md:h-[300px] sm:h-[200px] h-[200px]"
+        title="Node Zero video"
+        loading="lazy"
+        [src]="section.details[0].video | urlSanitizer: 'resourceUrl'"
+        allowfullscreen
+        allowtransparency
+        allow="autoplay"
+      ></iframe>
+    </div>
+  </div>
+
+</section>

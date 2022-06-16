@@ -1,8 +1,45 @@
-<gridster *ngIf="options && dashboard" [options]="options" class="h-[100%]">
-  <gridster-item class="h-[100%]" [item]="item" *ngFor="let item of dashboard;let i = index">
-    <!-- your content here -->
-    <div class="h-[100%]">TEST {{i}}
-    <app-charts class="h-[100%]"></app-charts>
-    </div>
-  </gridster-item>
-</gridster>
+<ng-container *ngIf="dashboardsOverviewSectionsDetails">
+  <gridster *ngIf="options && dashboard" [options]="options" class="h-[100%]">
+    <gridster-item class="h-[100%]" [item]="item" *ngFor="let item of dashboard;let i = index">
+
+      <!--PROFILE-->
+      <ng-container *ngIf="dashboardsOverviewSectionsDetails[i].format === 'Profile'">
+        <app-profile class="h-[100%]" [section]="dashboardsOverviewSectionsDetails[i]"></app-profile>
+      </ng-container>
+
+      <!--CHARTS-->
+      <ng-container *ngIf="dashboardsOverviewSectionsDetails[i].format === 'Horizontal Bar Chart'
+              || dashboardsOverviewSectionsDetails[i].format === 'Vertical Bar Chart'
+              || dashboardsOverviewSectionsDetails[i].format === 'Pie Chart'
+              || dashboardsOverviewSectionsDetails[i].format === 'Doughnut Chart'
+              || dashboardsOverviewSectionsDetails[i].format === 'Line Chart'">
+        <div class="h-[100%]">
+          <app-charts [section]="dashboardsOverviewSectionsDetails[i]" class="h-[100%]"></app-charts>
+        </div>
+      </ng-container>
+
+
+      <!--COUNT-->
+      <ng-container *ngIf="dashboardsOverviewSectionsDetails[i].format === 'Count'">
+        <app-counts class="h-[100%]" [section]="dashboardsOverviewSectionsDetails[i]"></app-counts>
+      </ng-container>
+
+
+      <!--TABLE-->
+      <ng-container *ngIf="dashboardsOverviewSectionsDetails[i].format === 'Table Query'">
+        <app-table class="h-[100%]" [section]="dashboardsOverviewSectionsDetails[i]"></app-table>
+      </ng-container>
+
+
+      <!--VIDEO-->
+      <ng-container *ngIf="dashboardsOverviewSectionsDetails[i].format === 'No Header Video'">
+        <app-video-card class="h-[100%]" [section]="dashboardsOverviewSectionsDetails[i]"></app-video-card>
+      </ng-container>
+
+      <!--PARAGRAPH-->
+      <ng-container *ngIf="dashboardsOverviewSectionsDetails[i].format === 'Paragraph'">
+        <app-paragraph class="h-[100%]" [section]="dashboardsOverviewSectionsDetails[i]"></app-paragraph>
+      </ng-container>
+    </gridster-item>
+  </gridster>
+</ng-container>

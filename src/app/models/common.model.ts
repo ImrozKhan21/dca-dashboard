@@ -17,8 +17,18 @@ export interface ISection {
   queryDomain: string;
   queryName: string;
   sectionName: string;
+  details?: any;
 }
 
+export interface IProfile {
+  text: string;
+  photo: string;
+  paragraph: string;
+}
+
+export interface ICount  {
+  Value: number;
+}
 
 export interface IOption {
   name: string;

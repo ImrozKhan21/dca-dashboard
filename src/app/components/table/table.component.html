@@ -1,0 +1,27 @@
+<section class="h-[100%]">
+  <div class="w-[100%]">
+    <h1 class="text-[20px] font-semibold p-2 text-center" [innerHTML]="section.sectionName"></h1>
+
+    <p-table [value]="section.details">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of getCols(section.details[0])">
+            {{col && col.includes('link-') ? col.split('-')[1] : col}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-tableRow>
+        <tr class="text-sm">
+          <td *ngFor="let col of getCols(section.details[0])">
+            <ng-container *ngIf="col.includes('link-'); else elseTemp">
+              <a class="text-blue-500" [href]="tableRow[col]" target="_blank">Open</a>
+            </ng-container>
+            <ng-template #elseTemp>
+              {{tableRow[col]}}
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>
