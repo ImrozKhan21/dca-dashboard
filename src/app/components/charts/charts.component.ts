@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ISection} from "../../models/common.model";
+import {WindowRefService} from "../../services/window-ref.service";
 
 @Component({
   selector: 'app-charts',
@@ -9,9 +10,15 @@ import {ISection} from "../../models/common.model";
 export class ChartsComponent implements OnInit {
   @Input() section: ISection;
 
-  constructor() { }
+  constructor(private windowRef: WindowRefService) {
+  }
 
   ngOnInit(): void {
+  }
+
+  open() {
+    const url = this.section.open;
+    this.windowRef.openUrl(url);
   }
 
 }

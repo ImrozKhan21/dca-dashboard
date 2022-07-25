@@ -1,7 +1,7 @@
 <section class="p-4 h-[100%]">
   <p-tabMenu [model]="items"></p-tabMenu>
 
-  <ng-container *ngIf="sectionDetails">
+  <ng-container *ngIf="sectionDetails?.length">
     <app-grid-wrapper [sectionDetails]="sectionDetails" [currentTab]="currentTab"  class="h-[100%]"></app-grid-wrapper>
   </ng-container>
 </section>

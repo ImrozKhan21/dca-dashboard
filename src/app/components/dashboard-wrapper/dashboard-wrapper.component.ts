@@ -55,7 +55,7 @@ export class DashboardWrapperComponent implements OnInit {
   async tabClicked(tabId: string) {
     this.currentTab = tabId;
     this.sectionDetails = await this.apiCallsService.getTabSections(tabId).toPromise();
-    console.log('111 tab', this.sectionDetails);
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy() {

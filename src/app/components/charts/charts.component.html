@@ -1,6 +1,10 @@
 <section class="p-3 h-[100%]">
 
-  <h1 class="text-[20px] font-semibold p-1 text-center" [innerHTML]="section.sectionName"></h1>
+  <div class="flex items-center justify-center gap-2" (click)="open()">
+    <h1 [ngClass]="{'link-color-no-underline': section.open}" class="text-[20px] font-semibold p-1 text-center"
+        [innerHTML]="section.sectionName"></h1>
+    <i *ngIf="section.open" class="pi pi-external-link link-color-no-underline"></i>
+  </div>
 
   <app-pie-chart class="h-[100%]" *ngIf="section.format === 'Pie Chart' ||
    section.format =='Doughnut Chart'" [section]="section"></app-pie-chart>

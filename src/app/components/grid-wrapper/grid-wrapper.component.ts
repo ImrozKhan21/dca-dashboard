@@ -11,7 +11,18 @@ import {ApiCallsService} from "../../services/api-calls.service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GridWrapperComponent implements OnInit {
-  @Input() sectionDetails: ISection[];
+  @Input() set sectionDetails(value: ISection[]) {
+    this._sectionDetails = value;
+    this.setGridOptions();
+    this.setToolSectionsAndGetDetails();
+  };
+
+  get sectionDetails() {
+    return this._sectionDetails;
+  }
+
+  _sectionDetails: ISection[];
+
   @Input() currentTab: string;
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
@@ -30,8 +41,6 @@ export class GridWrapperComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setGridOptions();
-    this.setToolSectionsAndGetDetails();
   }
 
   setGridOptions() {
@@ -92,11 +101,11 @@ export class GridWrapperComponent implements OnInit {
       {cols: 4, rows: 2, y: 6, x: 4}
     ];
     this.dashboard = this.dashboardsOverviewSectionsDetails.map((item, index) => {
-      const lastItem = dashboard[index-1];
-      const {cols, rows, y, x} = dashboard[index] ? dashboard[index]
+      const lastItem = dashboard[index - 1];
+      const {cols, rows, y, x} = item.cols ? item : dashboard[index] ? dashboard[index]
         : {cols: 4, rows: 2, y: (lastItem.y + 2), x: lastItem.x ? 0 : lastItem.x + 4};
 
-      return {cols, rows: rows, y, x }
+      return {cols, rows: rows, y, x}
     })
     console.table(this.dashboard);
   }

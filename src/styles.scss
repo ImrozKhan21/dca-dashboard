@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+gridster {
+  background: whitesmoke !important;
+}
+
+
+.link-color {
+  color: #0EA5E9 !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+  // font-weight: 500 !important;
+}
+
+.link-color-no-underline {
+  color: #0EA5E9 !important;
+  cursor: pointer;
+  // font-weight: 500 !important;
+}

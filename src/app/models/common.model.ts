@@ -18,6 +18,11 @@ export interface ISection {
   queryName: string;
   sectionName: string;
   details?: any;
+  cols: number;
+  rows: number;
+  y: number;
+  x: number;
+  open: string;
 }
 
 export interface IProfile {

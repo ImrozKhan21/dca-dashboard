@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ISection} from "../../models/common.model";
+import {WindowRefService} from "../../services/window-ref.service";
 
 @Component({
   selector: 'app-table',
@@ -9,13 +10,20 @@ import {ISection} from "../../models/common.model";
 export class TableComponent implements OnInit {
   @Input() section: ISection;
 
-  constructor() { }
+  constructor(private windowRef: WindowRefService) {
+  }
+
 
   ngOnInit(): void {
   }
 
   getCols(firstRow: any): string[] {
     return Object.keys(firstRow);
+  }
+
+  open() {
+    const url = this.section.open;
+    this.windowRef.openUrl(url);
   }
 
 }

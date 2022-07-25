@@ -10,13 +10,20 @@ function _window(): any {
 })
 export class WindowRefService {
 
-  constructor(@Inject(PLATFORM_ID) private readonly _platformId: object) { }
+  constructor(@Inject(PLATFORM_ID) private readonly platformId: object) {
+  }
 
   get nativeWindow(): any {
     return _window();
   }
 
   isSSR(): boolean {
-    return  !isPlatformBrowser(this._platformId);
+    return !isPlatformBrowser(this.platformId);
+  }
+
+  openUrl(url: string) {
+    if (isPlatformBrowser(this.platformId) && url) {
+      this.nativeWindow.open(url, '_blank');
+    }
   }
 }
