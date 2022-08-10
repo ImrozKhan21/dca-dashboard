@@ -26,4 +26,11 @@ export class WindowRefService {
       this.nativeWindow.open(url, '_blank');
     }
   }
+
+  iniFrame() {
+    if (isPlatformBrowser(this.platformId)) {
+      return this.nativeWindow.location !== this.nativeWindow.parent.location;
+    }
+    return false;
+  }
 }

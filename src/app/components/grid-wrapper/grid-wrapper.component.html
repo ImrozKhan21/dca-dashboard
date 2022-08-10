@@ -1,3 +1,7 @@
+<p-progressSpinner class="item-center-n-relative"
+                   *ngIf="!(dashboardsOverviewSectionsDetails) && !hideLoader">
+</p-progressSpinner>
+
 <ng-container *ngIf="dashboardsOverviewSectionsDetails">
   <gridster *ngIf="options && dashboard" [options]="options" class="h-[100%]">
     <gridster-item class="h-[100%]" [item]="item" *ngFor="let item of dashboard;let i = index">
@@ -13,7 +17,7 @@
               || dashboardsOverviewSectionsDetails[i].format === 'Pie Chart'
               || dashboardsOverviewSectionsDetails[i].format === 'Doughnut Chart'
               || dashboardsOverviewSectionsDetails[i].format === 'Line Chart'">
-        <div class="h-[100%]">
+        <div class="h-[100%] overflow-auto">
           <app-charts [section]="dashboardsOverviewSectionsDetails[i]" class="h-[100%]"></app-charts>
         </div>
       </ng-container>

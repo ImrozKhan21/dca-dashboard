@@ -3,6 +3,7 @@ import {DisplayGrid, GridsterConfig, GridsterItem, GridType} from "angular-grids
 import {ISection} from "../../models/common.model";
 import {combineLatest, Observable, take} from "rxjs";
 import {ApiCallsService} from "../../services/api-calls.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-grid-wrapper',
@@ -27,9 +28,11 @@ export class GridWrapperComponent implements OnInit {
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
   dashboardsOverviewSectionsDetails: ISection[];
+  hideLoader = false;
+  gridType: GridType = GridType.ScrollVertical;
 
-
-  constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
+              private messageService: MessageService) {
   }
 
   static itemChange(item: any, itemComponent: any) {
@@ -44,8 +47,9 @@ export class GridWrapperComponent implements OnInit {
   }
 
   setGridOptions() {
+    this.gridType = this.sectionDetails[0].gridType;
     this.options = {
-      gridType: GridType.ScrollVertical,
+      gridType: this.gridType || GridType.ScrollVertical,
       displayGrid: DisplayGrid.OnDragAndResize,
       margin: 10,
       outerMargin: true,
@@ -81,7 +85,21 @@ export class GridWrapperComponent implements OnInit {
         return {...section, details: values[i]};
       });
       this.createDashboard();
+      this.hideLoader = true;
       this.changeDetectorRef.detectChanges();
+    }, error => {
+      console.log('Error', error)
+      this.hideLoader = true;
+      this.showErrorMessage();
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  showErrorMessage() {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Network error',
+      detail: 'Please try again after other time'
     });
   }
 

@@ -18,7 +18,7 @@ export class TableComponent implements OnInit {
   }
 
   getCols(firstRow: any): string[] {
-    return Object.keys(firstRow);
+    return firstRow ? Object.keys(firstRow) : [];
   }
 
   open() {

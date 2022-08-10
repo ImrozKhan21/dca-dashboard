@@ -1,3 +1,5 @@
+import {GridType} from "angular-gridster2/lib/gridsterConfig.interface";
+
 export interface IEnv {
   "authority": string;
   "cinchyRootUrl": string;
@@ -23,6 +25,7 @@ export interface ISection {
   y: number;
   x: number;
   open: string;
+  gridType: GridType;
 }
 
 export interface IProfile {

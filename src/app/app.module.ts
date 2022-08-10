@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CinchyConfig, CinchyModule, CinchyService} from "@cinchy-co/angular-sdk";
 import {ConfigService} from "./config.service";
 import {MessageService} from "primeng/api";
+import {ToastModule} from "primeng/toast";
 
 
 export function appLoadFactory(config: ConfigService) {
@@ -23,14 +24,15 @@ export function getBaseUrl() {
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    GridsterModule,
-    ComponentsModule,
-    CinchyModule.forRoot(),
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        GridsterModule,
+        ComponentsModule,
+        CinchyModule.forRoot(),
+        ToastModule,
+    ],
   providers: [
     {
       provide: APP_INITIALIZER,

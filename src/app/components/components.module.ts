@@ -12,6 +12,7 @@ import { CountsComponent } from './counts/counts.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import {TableModule} from "primeng/table";
 import {PipesModule} from "../pipes/pipes.module";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 
 
@@ -29,13 +30,14 @@ import {PipesModule} from "../pipes/pipes.module";
         GridWrapperComponent,
         DashboardWrapperComponent
     ],
-  imports: [
-    CommonModule,
-    GridsterModule,
-    ChartsModule,
-    TabMenuModule,
-    TableModule,
-    PipesModule
-  ]
+    imports: [
+        CommonModule,
+        GridsterModule,
+        ChartsModule,
+        TabMenuModule,
+        TableModule,
+        PipesModule,
+        ProgressSpinnerModule
+    ]
 })
 export class ComponentsModule { }
