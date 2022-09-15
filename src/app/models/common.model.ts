@@ -12,6 +12,8 @@ export interface ITab {
   pageId: string;
   pageSequence: number;
   pageTitle: string;
+  icon: string;
+  gridType: string;
 }
 
 export interface ISection {
@@ -19,6 +21,7 @@ export interface ISection {
   queryDomain: string;
   queryName: string;
   sectionName: string;
+  sectionDesc: string;
   details?: any;
   cols: number;
   rows: number;

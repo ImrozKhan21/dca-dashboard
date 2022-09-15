@@ -25,7 +25,7 @@ export class AppComponent {
       } else {
         if (isPlatformBrowser(this.platformId)) {
           const url = this.windowRefService.nativeWindow.location.href;
-          this.cinchyService.login(url).then(success => {
+          this.cinchyService.login().then(success => {
             if (success) {
               this.setDetails();
             }

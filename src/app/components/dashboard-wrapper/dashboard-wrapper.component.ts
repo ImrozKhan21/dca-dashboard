@@ -44,7 +44,7 @@ export class DashboardWrapperComponent implements OnInit {
     this.items = this.tabs.map(tabItem => {
       return {
         label: tabItem.pageTitle, id: tabItem.pageId,
-        icon: 'pi pi-fw pi-home',
+        icon: `pi pi-fw ${tabItem.icon}`,
         command: () => {
           this.tabClicked(tabItem.pageId);
         }
