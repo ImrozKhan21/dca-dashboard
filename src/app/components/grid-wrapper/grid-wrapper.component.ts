@@ -104,7 +104,7 @@ export class GridWrapperComponent implements OnInit {
   }
 
   createDashboard() {
-    console.log('1111 dashboardsOverviewSectionsDetails', this.dashboardsOverviewSectionsDetails);
+   // console.log('1111 dashboardsOverviewSectionsDetails', this.dashboardsOverviewSectionsDetails);
 
     const dashboard = [
       {cols: 4, rows: 2, y: 0, x: 0},

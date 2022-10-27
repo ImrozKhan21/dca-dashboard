@@ -15,14 +15,23 @@ export class ApiCallsService {
   }
 
   cachedSections: any = {};
+  domain: string;
+
+  getEnvDetails(): Observable<any> {
+    const url = `/API/Experiences/Get%20DX%20Environments`;
+    return this.getResponse(url).pipe(
+      tap(resp => {
+        this.domain = resp[0].domain
+      }));
+  }
 
   getAllTabsPerDashboard(dashboardId: string): Observable<any> {
-    const url = `/API/Dashboard/Get%20Dashboard%20Pages?%40Id=${dashboardId}`;
+    const url = `/API/${this.domain}/Get%20Dashboard%20Pages?%40Id=${dashboardId}`;
     return this.getResponse(url);
   }
 
   getTabSections(tabId: string): Observable<any> {
-    const url = `/API/Dashboard/Get%20Dashboard%20Sections?%40Id=${tabId}`;
+    const url = `/API/${this.domain}/Get%20Dashboard%20Sections?%40Id=${tabId}`;
     if (this.cachedSections[tabId]) {
       return of(this.cachedSections[tabId]);
     } else {

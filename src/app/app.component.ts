@@ -2,6 +2,7 @@ import {Component, Inject, PLATFORM_ID} from '@angular/core';
 import {CinchyService} from "@cinchy-co/angular-sdk";
 import {isPlatformBrowser} from "@angular/common";
 import {WindowRefService} from "./services/window-ref.service";
+import {ApiCallsService} from "./services/api-calls.service";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   fullScreenHeight: number = 400;
 
   constructor(private cinchyService: CinchyService, @Inject(PLATFORM_ID) private platformId: any,
-              private windowRefService: WindowRefService) {
+              private windowRefService: WindowRefService, private apiCallsService: ApiCallsService) {
   }
 
   async ngOnInit() {
@@ -38,6 +39,7 @@ export class AppComponent {
   }
 
   async setDetails() {
+    await this.apiCallsService.getEnvDetails().toPromise();
     this.isLoggedIn = true;
   }
 
