@@ -23,6 +23,7 @@
     "@cinchy-co/angular-sdk": "^4.4.0",
     "@swimlane/ngx-charts": "^20.1.0",
     "angular-gridster2": "^13.0.0",
+    "angular-highcharts": "^14.1.7",
     "primeicons": "^5.0.0",
     "primeng": "^13.4.1",
     "rxjs": "~7.4.0",
