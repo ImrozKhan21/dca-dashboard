@@ -16,7 +16,9 @@
               || dashboardsOverviewSectionsDetails[i].format === 'Vertical Bar Chart'
               || dashboardsOverviewSectionsDetails[i].format === 'Pie Chart'
               || dashboardsOverviewSectionsDetails[i].format === 'Doughnut Chart'
-              || dashboardsOverviewSectionsDetails[i].format === 'Line Chart'">
+              || dashboardsOverviewSectionsDetails[i].format === 'Line Chart'
+              || dashboardsOverviewSectionsDetails[i].format === 'Gauge'
+              || dashboardsOverviewSectionsDetails[i].format === 'Linear Gauge'">
         <div class="h-[100%] overflow-auto">
           <app-charts [section]="dashboardsOverviewSectionsDetails[i]" class="h-[100%]"></app-charts>
         </div>

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Chart} from "angular-highcharts";
+import * as Highcharts from "highcharts";
+import { Options } from "highcharts";
+import HC_bullet from "highcharts/modules/bullet";
+
+HC_bullet(Highcharts);
 
 @Component({
   selector: 'app-bullet-chart',
@@ -7,28 +11,77 @@ import {Chart} from "angular-highcharts";
   styleUrls: ['./bullet-chart.component.scss']
 })
 export class BulletChartComponent implements OnInit {
-  chart = new Chart({
+  Highcharts: typeof Highcharts = Highcharts;
+  updateFlag = false;
+  chartOptions: Options = {
+    series: [
+      {
+        type: "bullet",
+        data: [
+          {
+            y: 260,
+            target: 300
+          },
+          {
+            y: 360,
+            target: 400
+          }
+        ]
+      },
+      {
+        type: "bullet",
+        data: [
+          {
+            y: 280,
+            target: 250,
+            color: "#c0ffee"
+          }
+        ]
+      },
+      {
+        type: "bullet",
+        data: [
+          {
+            y: 150,
+            target: 250,
+            color: "#bada55"
+          }
+        ]
+      }
+    ],
+    tooltip: {
+      pointFormat: "<b>{point.y}</b> (with target at {point.target})"
+    }
+  };
+
+  newChartOptions: Options = {
     chart: {
-      type: 'bullet'
+      inverted: true,
+      marginLeft: 0,
+      height: 190
     },
     title: {
-      text: null
+      text: 'Total Revenue'
     },
     legend: {
       enabled: false
+    },
+    xAxis: {
+      categories: ['<span class="hc-cat-title">Profit</span><br/>%']
     },
     yAxis: {
       gridLineWidth: 0
     },
     plotOptions: {
       series: {
-        pointPadding: 0.25,
         borderWidth: 0,
-        color: '#000',
+        borderRadius: 10,
+        color: "#819bc2",
         targetOptions: {
-          width: '200%'
-        }
-      }
+          width: "20%"
+        },
+        grouping: false
+      } as Highcharts.PlotSeriesOptions
     },
     credits: {
       enabled: false
@@ -36,11 +89,13 @@ export class BulletChartComponent implements OnInit {
     exporting: {
       enabled: false
     }
-  });
+  };
 
   constructor() { }
 
   ngOnInit(): void {
+    this.chartOptions = {...this.chartOptions, ...this.newChartOptions};
+    this.updateFlag = true;
   }
 
 }
