@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ApiCallsService} from "../../services/api-calls.service";
-import {IGlobalFilter, ISection, ITab} from "../../models/common.model";
+import {IGlobalFilter, IOption, ISection, ITab} from "../../models/common.model";
 import {MenuItem} from 'primeng/api';
 import {ReplaySubject, takeUntil} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
@@ -20,6 +20,8 @@ export class DashboardWrapperComponent implements OnInit {
   sectionDetails: ISection[];
   fromDate: any;
   toDate: any;
+  selectedDropdownFilter: string;
+  dropdownFilterOptions: IOption[];
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
@@ -42,8 +44,16 @@ export class DashboardWrapperComponent implements OnInit {
     this.setTabItems();
     this.currentTabDetails = this.tabs[0];
     this.currentTab = this.currentTabDetails.pageId;
+    this.getDrodpdownFilterOptions();
     this.sectionDetails = await this.apiCallsService.getTabSections(this.currentTab).toPromise();
     this.changeDetectorRef.detectChanges();
+  }
+
+  async getDrodpdownFilterOptions() {
+    if (this.currentTabDetails.isGlobalDropdownFilter === 'Yes') {
+      const {dropdownQueryDomain, dropdownQueryName} = this.currentTabDetails;
+      this.dropdownFilterOptions = await this.apiCallsService.executeCinchyQueries(dropdownQueryName, dropdownQueryDomain).toPromise();
+    }
   }
 
   setTabItems() {
@@ -59,15 +69,26 @@ export class DashboardWrapperComponent implements OnInit {
   }
 
   async tabClicked(tabId: string) {
+    this.clearFilters();
     this.currentTab = tabId;
     this.currentTabDetails = this.tabs.find(tab => tab.pageId === tabId) as ITab;
+    this.getDrodpdownFilterOptions();
     this.sectionDetails = await this.apiCallsService.getTabSections(tabId).toPromise();
     this.changeDetectorRef.detectChanges();
   }
 
   applyFilters() {
-    const filter: IGlobalFilter = {fromDate: this.fromDate, toDate: this.toDate, pageId: this.currentTab};
+    const filter: IGlobalFilter = {
+      fromDate: this.fromDate, toDate: this.toDate, pageId: this.currentTab,
+      dropdownFilter: this.selectedDropdownFilter
+    };
     this.appStateService.applyGlobalFilter(filter);
+  }
+
+  clearFilters() {
+    this.fromDate = undefined;
+    this.toDate = undefined;
+    this.selectedDropdownFilter = '';
   }
 
   ngOnDestroy() {

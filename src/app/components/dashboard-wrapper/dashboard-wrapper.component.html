@@ -1,16 +1,23 @@
 <section class="p-4 h-[100%] full-height-element" *ngIf="currentTabDetails">
   <p-tabMenu [model]="items"></p-tabMenu>
 
-  <div class="flex gap-3 justify-end p-4" *ngIf="currentTabDetails?.isGlobalDateFilter === 'Yes'">
-    <div>
+  <div class="flex gap-3 justify-end p-4">
+    <div *ngIf="currentTabDetails?.isGlobalDateFilter === 'Yes'">
       <label class="text-gray-500 text-sm mr-2">From Date:</label>
       <p-calendar [(ngModel)]="fromDate" [placeholder]="'mm/dd/yyyy'"></p-calendar>
     </div>
 
-    <div>
+    <div *ngIf="currentTabDetails?.isGlobalDateFilter === 'Yes'">
       <label class="text-gray-500 text-sm mr-2">To Date:</label>
       <p-calendar [(ngModel)]="toDate" [placeholder]="'mm/dd/yyyy'"
       [disabled]="!fromDate" [minDate]="fromDate"></p-calendar>
+    </div>
+
+    <div *ngIf="currentTabDetails?.isGlobalDropdownFilter === 'Yes'">
+      <label class="text-gray-500 text-sm mr-2">{{currentTabDetails.dropdownFilterLabel}}:</label>
+      <p-dropdown class="w-[100%]" placeholder="Select..." [options]="dropdownFilterOptions"
+                  [(ngModel)]="selectedDropdownFilter" optionLabel="label" optionValue="label">
+      </p-dropdown>
     </div>
 
     <p-button [label]="'Apply'" (click)="applyFilters()"></p-button>

@@ -12,7 +12,7 @@ export interface IGlobalFilter {
   fromDate: any;
   toDate: any;
   pageId: string
-  dropdownValue?: string;
+  dropdownFilter?: string;
 }
 
 export interface ITab {
@@ -22,6 +22,15 @@ export interface ITab {
   icon: string;
   gridType: string;
   isGlobalDateFilter: string;
+  isGlobalDropdownFilter: string;
+  dropdownQueryDomain: string;
+  dropdownQueryName: string;
+  dropdownFilterLabel: string;
+}
+
+export interface IOption {
+  label: string;
+  id: string;
 }
 
 export interface ISection {

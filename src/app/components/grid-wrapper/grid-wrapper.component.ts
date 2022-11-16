@@ -32,8 +32,6 @@ export class GridWrapperComponent implements OnInit {
   dashboardsOverviewSectionsDetails: ISection[];
   hideLoader = false;
   gridType: GridType = GridType.ScrollVertical;
-  fromDate: any;
-  toDate: any
 
   constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
               private messageService: MessageService, private appStateService: AppStateService) {
@@ -51,9 +49,8 @@ export class GridWrapperComponent implements OnInit {
     this.appStateService.getGlobalFilter().subscribe((val: IGlobalFilter) => {
       console.log('111 VAL', val, this.currentTab);
       if (this.hasGlobalDateFilter) {
-        this.fromDate = val.fromDate;
-        this.toDate = val.toDate;
-        this.setToolSectionsAndGetDetails();
+        const {fromDate, toDate, dropdownFilter} = val;
+        this.setToolSectionsAndGetDetails(fromDate, toDate, dropdownFilter);
       }
     });
   }
@@ -83,14 +80,14 @@ export class GridWrapperComponent implements OnInit {
     };
   }
 
-  setToolSectionsAndGetDetails() {
+  setToolSectionsAndGetDetails(fromDate?:string, toDate?:string, dropdownFilter?:string) {
     const allObs: Observable<any>[] = [];
-//    console.log('1111 this.sectionDetails', this.sectionDetails);
     this.sectionDetails.forEach(section => {
       const params = {
         '@id': this.currentTab,
-        '@fromDate': this.fromDate ? new Date(this.fromDate).toLocaleDateString() : undefined,
-        '@toDate': this.toDate ? new Date(this.toDate).toLocaleDateString() : undefined,
+        '@fromDate': fromDate ? new Date(fromDate).toLocaleDateString() : undefined,
+        '@toDate': toDate ? new Date(toDate).toLocaleDateString() : undefined,
+        '@dropdownFilter': dropdownFilter ? dropdownFilter : undefined
       }
       const obs = this.apiCallsService.executeCinchyQueries(section.queryName, section.queryDomain, params);
       allObs.push(obs);
@@ -99,6 +96,7 @@ export class GridWrapperComponent implements OnInit {
       this.dashboardsOverviewSectionsDetails = this.sectionDetails.map((section, i) => {
         return {...section, details: values[i]};
       });
+      console.log('1111 SECTIONS', this.dashboardsOverviewSectionsDetails);
       this.createDashboard();
       this.hideLoader = true;
       this.changeDetectorRef.detectChanges();

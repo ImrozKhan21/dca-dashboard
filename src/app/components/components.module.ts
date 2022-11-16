@@ -15,6 +15,7 @@ import {PipesModule} from "../pipes/pipes.module";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {FormsModule} from "@angular/forms";
     PipesModule,
     ProgressSpinnerModule,
     CalendarModule,
-    FormsModule
+    FormsModule,
+    DropdownModule
   ]
 })
 export class ComponentsModule {
