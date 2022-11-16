@@ -1,9 +1,10 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {DisplayGrid, GridsterConfig, GridsterItem, GridType} from "angular-gridster2";
-import {ISection} from "../../models/common.model";
+import {IGlobalFilter, ISection} from "../../models/common.model";
 import {combineLatest, Observable, take} from "rxjs";
 import {ApiCallsService} from "../../services/api-calls.service";
 import {MessageService} from "primeng/api";
+import {AppStateService} from "../../services/app-state.service";
 
 @Component({
   selector: 'app-grid-wrapper',
@@ -25,14 +26,17 @@ export class GridWrapperComponent implements OnInit {
   _sectionDetails: ISection[];
 
   @Input() currentTab: string;
+  @Input() hasGlobalDateFilter: boolean;
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
   dashboardsOverviewSectionsDetails: ISection[];
   hideLoader = false;
   gridType: GridType = GridType.ScrollVertical;
+  fromDate: any;
+  toDate: any
 
   constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
-              private messageService: MessageService) {
+              private messageService: MessageService, private appStateService: AppStateService) {
   }
 
   static itemChange(item: any, itemComponent: any) {
@@ -44,6 +48,14 @@ export class GridWrapperComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.appStateService.getGlobalFilter().subscribe((val: IGlobalFilter) => {
+      console.log('111 VAL', val, this.currentTab);
+      if (this.hasGlobalDateFilter) {
+        this.fromDate = val.fromDate;
+        this.toDate = val.toDate;
+        this.setToolSectionsAndGetDetails();
+      }
+    });
   }
 
   setGridOptions() {
@@ -72,10 +84,13 @@ export class GridWrapperComponent implements OnInit {
   }
 
   setToolSectionsAndGetDetails() {
-    const allObs: Observable<any>[] = []
+    const allObs: Observable<any>[] = [];
+//    console.log('1111 this.sectionDetails', this.sectionDetails);
     this.sectionDetails.forEach(section => {
       const params = {
-        '@id': this.currentTab
+        '@id': this.currentTab,
+        '@fromDate': this.fromDate ? new Date(this.fromDate).toLocaleDateString() : undefined,
+        '@toDate': this.toDate ? new Date(this.toDate).toLocaleDateString() : undefined,
       }
       const obs = this.apiCallsService.executeCinchyQueries(section.queryName, section.queryDomain, params);
       allObs.push(obs);
@@ -104,7 +119,7 @@ export class GridWrapperComponent implements OnInit {
   }
 
   createDashboard() {
-   // console.log('1111 dashboardsOverviewSectionsDetails', this.dashboardsOverviewSectionsDetails);
+    // console.log('1111 dashboardsOverviewSectionsDetails', this.dashboardsOverviewSectionsDetails);
 
     const dashboard = [
       {cols: 4, rows: 2, y: 0, x: 0},

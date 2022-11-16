@@ -13,6 +13,8 @@ import {VideoCardComponent} from './video-card/video-card.component';
 import {TableModule} from "primeng/table";
 import {PipesModule} from "../pipes/pipes.module";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {CalendarModule} from "primeng/calendar";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
     TabMenuModule,
     TableModule,
     PipesModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    CalendarModule,
+    FormsModule
   ]
 })
 export class ComponentsModule {

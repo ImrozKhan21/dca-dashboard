@@ -8,12 +8,20 @@ export interface IEnv {
   "version": string;
 }
 
+export interface IGlobalFilter {
+  fromDate: any;
+  toDate: any;
+  pageId: string
+  dropdownValue?: string;
+}
+
 export interface ITab {
   pageId: string;
   pageSequence: number;
   pageTitle: string;
   icon: string;
   gridType: string;
+  isGlobalDateFilter: string;
 }
 
 export interface ISection {

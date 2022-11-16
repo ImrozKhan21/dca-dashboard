@@ -1,9 +1,10 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ApiCallsService} from "../../services/api-calls.service";
-import {ISection, ITab} from "../../models/common.model";
+import {IGlobalFilter, ISection, ITab} from "../../models/common.model";
 import {MenuItem} from 'primeng/api';
 import {ReplaySubject, takeUntil} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {AppStateService} from "../../services/app-state.service";
 
 @Component({
   selector: 'app-dashboard-wrapper',
@@ -13,13 +14,17 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class DashboardWrapperComponent implements OnInit {
   tabs: ITab[];
+  currentTabDetails: ITab;
   currentTab: string;
   items: MenuItem[];
   sectionDetails: ISection[];
+  fromDate: any;
+  toDate: any;
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
-              @Inject(PLATFORM_ID) private platformId: any, private activatedRoute: ActivatedRoute) {
+              @Inject(PLATFORM_ID) private platformId: any, private activatedRoute: ActivatedRoute,
+              private appStateService: AppStateService) {
   }
 
   async ngOnInit() {
@@ -35,7 +40,8 @@ export class DashboardWrapperComponent implements OnInit {
   async setPageDetails(currentDashboardId: string) {
     this.tabs = await this.apiCallsService.getAllTabsPerDashboard(currentDashboardId).toPromise();
     this.setTabItems();
-    this.currentTab = this.tabs[0].pageId;
+    this.currentTabDetails = this.tabs[0];
+    this.currentTab = this.currentTabDetails.pageId;
     this.sectionDetails = await this.apiCallsService.getTabSections(this.currentTab).toPromise();
     this.changeDetectorRef.detectChanges();
   }
@@ -54,8 +60,14 @@ export class DashboardWrapperComponent implements OnInit {
 
   async tabClicked(tabId: string) {
     this.currentTab = tabId;
+    this.currentTabDetails = this.tabs.find(tab => tab.pageId === tabId) as ITab;
     this.sectionDetails = await this.apiCallsService.getTabSections(tabId).toPromise();
     this.changeDetectorRef.detectChanges();
+  }
+
+  applyFilters() {
+    const filter: IGlobalFilter = {fromDate: this.fromDate, toDate: this.toDate, pageId: this.currentTab};
+    this.appStateService.applyGlobalFilter(filter);
   }
 
   ngOnDestroy() {
