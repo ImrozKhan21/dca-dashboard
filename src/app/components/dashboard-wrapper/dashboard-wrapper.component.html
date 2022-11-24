@@ -1,7 +1,7 @@
 <section class="p-4 h-[100%] full-height-element" *ngIf="currentTabDetails">
   <p-tabMenu [model]="items"></p-tabMenu>
 
-  <div class="flex gap-3 justify-end p-4">
+  <div class="flex gap-3 justify-end p-4" *ngIf="currentTabDetails?.isGlobalDropdownFilter === 'Yes' || currentTabDetails?.isGlobalDateFilter === 'Yes'">
     <div *ngIf="currentTabDetails?.isGlobalDateFilter === 'Yes'">
       <label class="text-gray-500 text-sm mr-2">From Date:</label>
       <p-calendar [(ngModel)]="fromDate" [placeholder]="'mm/dd/yyyy'"></p-calendar>
@@ -13,14 +13,24 @@
       [disabled]="!fromDate" [minDate]="fromDate"></p-calendar>
     </div>
 
-    <div *ngIf="currentTabDetails?.isGlobalDropdownFilter === 'Yes'">
+    <div class="flex items-center" *ngIf="currentTabDetails?.isGlobalDropdownFilter === 'Yes'">
       <label class="text-gray-500 text-sm mr-2">{{currentTabDetails.dropdownFilterLabel}}:</label>
-      <p-dropdown class="w-[100%]" placeholder="Select..." [options]="dropdownFilterOptions"
+      <p-autoComplete class="w-[100%]" placeholder="Select..."
+                      [(ngModel)]="selectedDropdownFilter"
+                      [suggestions]="filteredAutoCompleteOptions"
+                      (onSelect)="itemSelected($event)"
+                      (completeMethod)="filterAutoCompleteOptions($event)"
+                      [dropdown]="true"
+                      type="search"
+                      [field]="'label'"></p-autoComplete>
+
+      <!--<p-dropdown class="w-[100%]" placeholder="Select..." [options]="dropdownFilterOptions"
                   [(ngModel)]="selectedDropdownFilter" optionLabel="label" optionValue="label">
-      </p-dropdown>
+      </p-dropdown>-->
     </div>
 
-    <p-button [label]="'Apply'" (click)="applyFilters()"></p-button>
+    <p-button *ngIf="currentTabDetails?.isGlobalDropdownFilter === 'Yes' || currentTabDetails?.isGlobalDateFilter === 'Yes'"
+      [label]="'Apply'" (click)="applyFilters()"></p-button>
   </div>
   <ng-container *ngIf="sectionDetails?.length">
     <app-grid-wrapper [sectionDetails]="sectionDetails" [currentTab]="currentTab"

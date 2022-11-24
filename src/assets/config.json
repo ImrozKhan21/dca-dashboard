@@ -1,7 +1,8 @@
 {
-  "authority": "https://datacollaboration.net/sso",
-  "cinchyRootUrl": "https://datacollaboration.net",
-  "clientId": "dashboard-hub",
+  "authority": "https://cinchy.net/cinchysso",
+  "cinchyRootUrl": "https://cinchy.net/Cinchy",
+  "clientId": "dashboard-hub-local",
   "redirectUri": "https://localhost:4200/",
   "version": "1.0.0"
 }
+

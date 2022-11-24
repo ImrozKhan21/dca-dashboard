@@ -96,7 +96,6 @@ export class GridWrapperComponent implements OnInit {
       this.dashboardsOverviewSectionsDetails = this.sectionDetails.map((section, i) => {
         return {...section, details: values[i]};
       });
-      console.log('1111 SECTIONS', this.dashboardsOverviewSectionsDetails);
       this.createDashboard();
       this.hideLoader = true;
       this.changeDetectorRef.detectChanges();

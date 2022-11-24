@@ -20,8 +20,9 @@ export class DashboardWrapperComponent implements OnInit {
   sectionDetails: ISection[];
   fromDate: any;
   toDate: any;
-  selectedDropdownFilter: string;
+  selectedDropdownFilter: IOption;
   dropdownFilterOptions: IOption[];
+  filteredAutoCompleteOptions: IOption[];
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
@@ -53,6 +54,7 @@ export class DashboardWrapperComponent implements OnInit {
     if (this.currentTabDetails.isGlobalDropdownFilter === 'Yes') {
       const {dropdownQueryDomain, dropdownQueryName} = this.currentTabDetails;
       this.dropdownFilterOptions = await this.apiCallsService.executeCinchyQueries(dropdownQueryName, dropdownQueryDomain).toPromise();
+      this.filteredAutoCompleteOptions = [...this.dropdownFilterOptions];
     }
   }
 
@@ -77,10 +79,21 @@ export class DashboardWrapperComponent implements OnInit {
     this.changeDetectorRef.detectChanges();
   }
 
+  itemSelected(event: any) {
+    this.selectedDropdownFilter = event;
+  }
+
+  filterAutoCompleteOptions(event: any) {
+    let query = event.query;
+    this.filteredAutoCompleteOptions = this.dropdownFilterOptions.filter((item: any) => {
+      return item.label?.toLowerCase().includes(query.toLowerCase());
+    });
+  }
+
   applyFilters() {
     const filter: IGlobalFilter = {
       fromDate: this.fromDate, toDate: this.toDate, pageId: this.currentTab,
-      dropdownFilter: this.selectedDropdownFilter
+      dropdownFilter: this.selectedDropdownFilter?.id
     };
     this.appStateService.applyGlobalFilter(filter);
   }
@@ -88,7 +101,7 @@ export class DashboardWrapperComponent implements OnInit {
   clearFilters() {
     this.fromDate = undefined;
     this.toDate = undefined;
-    this.selectedDropdownFilter = '';
+    this.selectedDropdownFilter = {} as IOption;
   }
 
   ngOnDestroy() {

@@ -68,7 +68,6 @@ export class ApiCallsService {
   }
 
   executeCinchyQueries(name: string, domain: string, options?: any, isInsert?: boolean): Observable<any> {
-    console.log('111 PARAMS', options);
     return this.cinchyService.executeQuery(domain, name, options).pipe(
       map(resp => isInsert ? resp : resp?.queryResult?.toObjectArray())
     );

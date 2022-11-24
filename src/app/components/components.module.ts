@@ -16,6 +16,7 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 
 @NgModule({
@@ -32,18 +33,19 @@ import {DropdownModule} from "primeng/dropdown";
     GridWrapperComponent,
     DashboardWrapperComponent
   ],
-  imports: [
-    CommonModule,
-    GridsterModule,
-    ChartsModule,
-    TabMenuModule,
-    TableModule,
-    PipesModule,
-    ProgressSpinnerModule,
-    CalendarModule,
-    FormsModule,
-    DropdownModule
-  ]
+    imports: [
+        CommonModule,
+        GridsterModule,
+        ChartsModule,
+        TabMenuModule,
+        TableModule,
+        PipesModule,
+        ProgressSpinnerModule,
+        CalendarModule,
+        FormsModule,
+        DropdownModule,
+        AutoCompleteModule
+    ]
 })
 export class ComponentsModule {
 }
