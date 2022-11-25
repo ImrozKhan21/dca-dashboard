@@ -82,6 +82,7 @@ export class GridWrapperComponent implements OnInit {
 
   setToolSectionsAndGetDetails(fromDate?:string, toDate?:string, dropdownFilter?:string) {
     const allObs: Observable<any>[] = [];
+    console.log('1111 SD', this.sectionDetails);
     this.sectionDetails.forEach(section => {
       const params = {
         '@id': this.currentTab,

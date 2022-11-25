@@ -39,6 +39,9 @@ export class PieChartComponent implements OnInit {
     this.isDoughnut = this.section.format === 'Doughnut Chart';
     this.yAxisLabel  = this.details[0]['Y-axis'];
     this.xAxisLabel  = this.details[0]['X-axis'];
+    setTimeout(() => {
+      this.showLegend  = !this.section['hideLegend'];
+    }, 0);
     this.data = this.details.filter((item: any) => item['Value']);
     const totalSeriesCount: number = this.details[0]['TotalDataSeriesCount'];
     this.data = this.details.map((item: any) => {

@@ -26,6 +26,9 @@ export class RadialGaugeComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.section.details;
+    setTimeout(() => {
+      this.legend  = !this.section['hideLegend'];
+    }, 0);
   }
 
   onSelect(data: any): void {

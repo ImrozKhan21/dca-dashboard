@@ -34,6 +34,7 @@ export interface IOption {
 }
 
 export interface ISection {
+  hideLegend: boolean;
   format: string;
   queryDomain: string;
   queryName: string;
@@ -56,6 +57,7 @@ export interface IProfile {
 
 export interface ICount  {
   Value: number;
+  Desc?: string;
 }
 
 export interface IOption {
