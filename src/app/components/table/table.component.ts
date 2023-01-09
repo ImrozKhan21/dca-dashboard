@@ -18,7 +18,7 @@ export class TableComponent implements OnInit {
   }
 
   getCols(firstRow: any): string[] {
-    return firstRow ? Object.keys(firstRow) : [];
+    return firstRow ? Object.keys(firstRow).filter(key => !['link-Label', 'link-ColumnTitle'].includes(key)) : [];
   }
 
   open() {

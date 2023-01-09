@@ -18,7 +18,9 @@
               || dashboardsOverviewSectionsDetails[i].format === 'Doughnut Chart'
               || dashboardsOverviewSectionsDetails[i].format === 'Line Chart'
               || dashboardsOverviewSectionsDetails[i].format === 'Gauge'
-              || dashboardsOverviewSectionsDetails[i].format === 'Linear Gauge'">
+              || dashboardsOverviewSectionsDetails[i].format === 'Linear Gauge'
+              || dashboardsOverviewSectionsDetails[i].format === 'Group Horizontal Bar Chart'
+              || dashboardsOverviewSectionsDetails[i].format === 'Group Vertical Bar Chart'">
         <div class="h-[100%] overflow-auto">
           <app-charts [section]="dashboardsOverviewSectionsDetails[i]" class="h-[100%]"></app-charts>
         </div>

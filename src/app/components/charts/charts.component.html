@@ -6,19 +6,20 @@
     <i *ngIf="section.open" class="pi pi-external-link link-color-no-underline"></i>
   </div>
 
-  <app-pie-chart class="h-[100%] overflow-auto" *ngIf="section.format === 'Pie Chart' ||
+  <app-pie-chart class="h-[95%] overflow-auto" *ngIf="section.format === 'Pie Chart' ||
    section.format =='Doughnut Chart'" [section]="section"></app-pie-chart>
 
-  <app-line-chart class="h-[100%] overflow-auto" *ngIf="section.format === 'Line Chart'"
+  <app-line-chart class="h-[90%] overflow-auto" *ngIf="section.format === 'Line Chart'"
                   [section]="section"></app-line-chart>
 
-  <app-linear-gauge *ngIf="section.format === 'Linear Gauge'"
+  <app-linear-gauge class="h-[95%] overflow-auto" *ngIf="section.format === 'Linear Gauge'"
                     [section]="section"></app-linear-gauge>
 
-  <app-radial-gauge *ngIf="section.format === 'Gauge'"
+  <app-radial-gauge  class="h-[100%] overflow-auto" *ngIf="section.format === 'Gauge'"
                     [section]="section"></app-radial-gauge>
 
   <app-bar-chart class="h-[100%] overflow-auto" *ngIf="section.format === 'Vertical Bar Chart'
-|| section.format === 'Horizontal Bar Chart'" [section]="section"></app-bar-chart>
+|| section.format === 'Horizontal Bar Chart' || section.format === 'Group Horizontal Bar Chart'
+|| section.format === 'Group Horizontal Bar Chart'" [section]="section"></app-bar-chart>
 </section>
 

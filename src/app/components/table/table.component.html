@@ -1,4 +1,4 @@
-<section class="h-[100%] overflow-auto">
+<section class="grid-table h-[100%]">
   <div class="w-[100%]">
     <div class="flex items-center justify-center gap-2" (click)="open()">
       <h1 [ngClass]="{'link-color-no-underline': section.open}" class="text-[20px] font-semibold p-1 text-center"
@@ -6,11 +6,12 @@
       <i *ngIf="section.open" class="pi pi-external-link link-color-no-underline"></i>
     </div>
 
-    <p-table [value]="section.details">
+    <p-table [value]="section.details" [scrollable]="true" scrollHeight="400px">
       <ng-template pTemplate="header">
-        <tr>
+        <tr class="">
           <th *ngFor="let col of getCols(section.details[0])">
-            {{col && col.includes('link-') ? col.split('-')[1] : col}}
+            {{col && col.includes('link-') ? section.details[0]['link-ColumnTitle'] ? section.details[0]['link-ColumnTitle']
+            :  col.split('-')[1] : col}}
           </th>
         </tr>
       </ng-template>
@@ -18,7 +19,8 @@
         <tr class="text-sm">
           <td *ngFor="let col of getCols(section.details[0])">
             <ng-container *ngIf="col.includes('link-'); else elseTemp">
-              <a class="text-blue-500" [href]="tableRow[col]" target="_blank">Open</a>
+              <a class="text-blue-500" [href]="tableRow[col]" target="_blank">
+                {{tableRow['link-Label'] ? tableRow['link-Label'] : 'Open'}}</a>
             </ng-container>
             <ng-template #elseTemp>
               {{tableRow[col]}}

@@ -32,7 +32,11 @@
     <p-button *ngIf="currentTabDetails?.isGlobalDropdownFilter === 'Yes' || currentTabDetails?.isGlobalDateFilter === 'Yes'"
       [label]="'Apply'" (click)="applyFilters()"></p-button>
   </div>
-  <ng-container *ngIf="sectionDetails?.length">
+  <p-progressSpinner class="item-center-n-relative"
+                     *ngIf="showLoader">
+  </p-progressSpinner>
+
+  <ng-container *ngIf="sectionDetails?.length && !showLoader">
     <app-grid-wrapper [sectionDetails]="sectionDetails" [currentTab]="currentTab"
                       [hasGlobalDateFilter]="currentTabDetails.isGlobalDateFilter === 'Yes'"
                       class="h-[100%]"></app-grid-wrapper>

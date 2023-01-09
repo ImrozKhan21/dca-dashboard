@@ -1,6 +1,41 @@
-<div class="h-[100%]" *ngIf="data">
+<div class="h-[90%]" *ngIf="data">
 
-  <ng-container  *ngIf="section.format === 'Horizontal Bar Chart'">
+  <ng-container *ngIf="section.format === 'Group Horizontal Bar Chart'">
+    <ngx-charts-bar-horizontal-2d
+      [results]="data"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      (select)="onSelect($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)">
+    </ngx-charts-bar-horizontal-2d>
+  </ng-container>
+
+  <ng-container *ngIf="section.format === 'Group Vertical Bar Chart'">
+    <ngx-charts-bar-vertical-2d
+      [view]="view"
+      [results]="data"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      (select)="onSelect($event)"
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)">
+    </ngx-charts-bar-vertical-2d>
+  </ng-container>
+
+  <ng-container *ngIf="section.format === 'Horizontal Bar Chart'">
     <ngx-charts-bar-horizontal
       *ngIf="details[0]['TotalDataSeriesCount'] === '1'"
       [results]="data"
@@ -35,10 +70,7 @@
     </ngx-charts-bar-horizontal-stacked>
   </ng-container>
 
-
-  <ng-container  *ngIf="section.format === 'Vertical Bar Chart'">
-
-
+  <ng-container *ngIf="section.format === 'Vertical Bar Chart'">
     <ngx-charts-bar-vertical
       *ngIf="details[0]['TotalDataSeriesCount'] === '1'"
       [results]="data"

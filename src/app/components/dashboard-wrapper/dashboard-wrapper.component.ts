@@ -23,6 +23,7 @@ export class DashboardWrapperComponent implements OnInit {
   selectedDropdownFilter: IOption;
   dropdownFilterOptions: IOption[];
   filteredAutoCompleteOptions: IOption[];
+  showLoader: boolean;
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
   constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
@@ -71,11 +72,13 @@ export class DashboardWrapperComponent implements OnInit {
   }
 
   async tabClicked(tabId: string) {
+    this.showLoader = true;
     this.clearFilters();
     this.currentTab = tabId;
     this.currentTabDetails = this.tabs.find(tab => tab.pageId === tabId) as ITab;
     this.getDrodpdownFilterOptions();
     this.sectionDetails = await this.apiCallsService.getTabSections(tabId).toPromise();
+    this.showLoader =false;
     this.changeDetectorRef.detectChanges();
   }
 
@@ -91,10 +94,12 @@ export class DashboardWrapperComponent implements OnInit {
   }
 
   applyFilters() {
+    console.log('1111 in aply filter')
     const filter: IGlobalFilter = {
       fromDate: this.fromDate, toDate: this.toDate, pageId: this.currentTab,
       dropdownFilter: this.selectedDropdownFilter?.id
     };
+    console.log('1111 in aply filter 2', filter)
     this.appStateService.applyGlobalFilter(filter);
   }
 

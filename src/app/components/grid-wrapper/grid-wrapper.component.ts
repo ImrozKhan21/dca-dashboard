@@ -47,8 +47,7 @@ export class GridWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.appStateService.getGlobalFilter().subscribe((val: IGlobalFilter) => {
-      console.log('111 VAL', val, this.currentTab);
-      if (this.hasGlobalDateFilter) {
+      if (this.hasGlobalDateFilter || val.dropdownFilter) {
         const {fromDate, toDate, dropdownFilter} = val;
         this.setToolSectionsAndGetDetails(fromDate, toDate, dropdownFilter);
       }

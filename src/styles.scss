@@ -47,3 +47,16 @@ gridster {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.grid-table {
+  .p-datatable {
+  //  margin-top: 135px !important;
+  }
+}
+
+.item-center-n-relative {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
