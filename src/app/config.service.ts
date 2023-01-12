@@ -23,15 +23,20 @@ export class ConfigService {
   setRowAndFormId() {
     if (isPlatformBrowser(this.platformId)) {
       let dashboardId = this.getQueryStringValue('dashboardId', window.location.search);
-      let rowId = this.getQueryStringValue('rowId', window.location.search);
+      let pageId = this.getQueryStringValue('pageId', window.location.search);
       if (!dashboardId) {
         dashboardId = this.getQueryStringValue('dashboardId', document.referrer);
-        rowId = this.getQueryStringValue('rowId', document.referrer);
+        pageId = this.getQueryStringValue('pageId', document.referrer);
       }
       dashboardId && sessionStorage.setItem('dashboardId', dashboardId);
+      pageId && sessionStorage.setItem('pageId', pageId);
 
       if (!sessionStorage.getItem('dashboardId') || dashboardId) {
         dashboardId && dashboardId != "null" ? sessionStorage.setItem('dashboardId', dashboardId) : sessionStorage.setItem('dashboardId', '');
+      }
+
+      if (!sessionStorage.getItem('pageId') || pageId) {
+        pageId && pageId != "null" ? sessionStorage.setItem('pageId', pageId) : sessionStorage.setItem('pageId', '');
       }
       console.log('session', sessionStorage.getItem('dashboardId'));
     }

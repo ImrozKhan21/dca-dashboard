@@ -3,7 +3,7 @@ import {ApiCallsService} from "../../services/api-calls.service";
 import {IGlobalFilter, IOption, ISection, ITab} from "../../models/common.model";
 import {MenuItem} from 'primeng/api';
 import {ReplaySubject, takeUntil} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AppStateService} from "../../services/app-state.service";
 
 @Component({
@@ -17,6 +17,7 @@ export class DashboardWrapperComponent implements OnInit {
   currentTabDetails: ITab;
   currentTab: string;
   items: MenuItem[];
+  currentMenuItem: MenuItem;
   sectionDetails: ISection[];
   fromDate: any;
   toDate: any;
@@ -28,24 +29,27 @@ export class DashboardWrapperComponent implements OnInit {
 
   constructor(private apiCallsService: ApiCallsService, private changeDetectorRef: ChangeDetectorRef,
               @Inject(PLATFORM_ID) private platformId: any, private activatedRoute: ActivatedRoute,
-              private appStateService: AppStateService) {
+              private appStateService: AppStateService, private router: Router) {
   }
 
   async ngOnInit() {
     this.activatedRoute.queryParams.pipe(takeUntil(this.destroyed$)).subscribe(params => {
       let dashboardId = params['dashboardId'];
+      let pageId = params['pageId'];
       if (this.platformId && !dashboardId) {
         dashboardId = sessionStorage.getItem('dashboardId') as string || 'member-dashboard';
+        pageId = sessionStorage.getItem('pageId') as string || '';
       }
-      this.setPageDetails(dashboardId)
+      this.setPageDetails(dashboardId, pageId)
     });
   }
 
-  async setPageDetails(currentDashboardId: string) {
+  async setPageDetails(currentDashboardId: string, pageId?: string) {
     this.tabs = await this.apiCallsService.getAllTabsPerDashboard(currentDashboardId).toPromise();
-    this.setTabItems();
-    this.currentTabDetails = this.tabs[0];
+
+    this.currentTabDetails = pageId ? this.tabs.find(tab => tab.pageId === pageId) as ITab : this.tabs[0];
     this.currentTab = this.currentTabDetails.pageId;
+    this.setTabItems();
     this.getDrodpdownFilterOptions();
     this.sectionDetails = await this.apiCallsService.getTabSections(this.currentTab).toPromise();
     this.changeDetectorRef.detectChanges();
@@ -69,16 +73,25 @@ export class DashboardWrapperComponent implements OnInit {
         }
       }
     });
+    this.currentMenuItem = this.items.find(item => item.id === this.currentTabDetails.pageId) || this.items[0];
+
   }
 
   async tabClicked(tabId: string) {
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: {pageId: tabId},
+        queryParamsHandling: 'merge', // remove to replace all query params by provided
+      });
     this.showLoader = true;
     this.clearFilters();
     this.currentTab = tabId;
     this.currentTabDetails = this.tabs.find(tab => tab.pageId === tabId) as ITab;
     this.getDrodpdownFilterOptions();
     this.sectionDetails = await this.apiCallsService.getTabSections(tabId).toPromise();
-    this.showLoader =false;
+    this.showLoader = false;
     this.changeDetectorRef.detectChanges();
   }
 
@@ -94,12 +107,10 @@ export class DashboardWrapperComponent implements OnInit {
   }
 
   applyFilters() {
-    console.log('1111 in aply filter')
     const filter: IGlobalFilter = {
       fromDate: this.fromDate, toDate: this.toDate, pageId: this.currentTab,
       dropdownFilter: this.selectedDropdownFilter?.id
     };
-    console.log('1111 in aply filter 2', filter)
     this.appStateService.applyGlobalFilter(filter);
   }
 

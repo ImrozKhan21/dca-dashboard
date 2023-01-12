@@ -1,5 +1,5 @@
 <section class="p-4 h-[100%] full-height-element" *ngIf="currentTabDetails">
-  <p-tabMenu [model]="items"></p-tabMenu>
+  <p-tabMenu [model]="items" [activeItem]="currentMenuItem"></p-tabMenu>
 
   <div class="flex gap-3 justify-end p-4" *ngIf="currentTabDetails?.isGlobalDropdownFilter === 'Yes' || currentTabDetails?.isGlobalDateFilter === 'Yes'">
     <div *ngIf="currentTabDetails?.isGlobalDateFilter === 'Yes'">

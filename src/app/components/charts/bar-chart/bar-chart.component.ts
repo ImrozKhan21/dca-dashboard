@@ -63,7 +63,6 @@ export class BarChartComponent implements OnInit {
         "value": item['DataSeries-1']
       }
     });
-    console.log('111 DATA', this.data);
   }
 
 }

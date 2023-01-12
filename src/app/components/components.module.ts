@@ -17,6 +17,7 @@ import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
 import {AutoCompleteModule} from "primeng/autocomplete";
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -27,12 +28,14 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     TableComponent,
     ParagraphComponent,
     CountsComponent,
-    VideoCardComponent
+    VideoCardComponent,
+    HeaderComponent
   ],
-  exports: [
-    GridWrapperComponent,
-    DashboardWrapperComponent
-  ],
+    exports: [
+        GridWrapperComponent,
+        DashboardWrapperComponent,
+        HeaderComponent
+    ],
     imports: [
         CommonModule,
         GridsterModule,

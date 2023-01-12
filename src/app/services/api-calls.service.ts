@@ -25,6 +25,11 @@ export class ApiCallsService {
       }));
   }
 
+  getHeaderDetails(dashboardId: string): Observable<any> {
+    const url = `/API/${this.domain}/Get%20Dashboard%20Header?%40Id=${dashboardId}`;
+    return this.getResponse(url);
+  }
+
   getAllTabsPerDashboard(dashboardId: string): Observable<any> {
     const url = `/API/${this.domain}/Get%20Dashboard%20Pages?%40Id=${dashboardId}`;
     return this.getResponse(url);

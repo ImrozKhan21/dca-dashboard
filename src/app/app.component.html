@@ -1,3 +1,7 @@
-<app-dashboard-wrapper *ngIf="isLoggedIn" class="h-[100%] full-height-element"></app-dashboard-wrapper>
+<div *ngIf="isLoggedIn">
+  <app-header></app-header>
+
+  <app-dashboard-wrapper class="h-[100%] full-height-element"></app-dashboard-wrapper>
+</div>
 
 <p-toast position="top-right" [baseZIndex]="5000"></p-toast>
