@@ -47,12 +47,14 @@ export interface ISection {
   x: number;
   open: string;
   gridType: GridType;
+  colorScheme: string;
 }
 
 export interface IProfile {
   text: string;
-  photo: string;
+  photo?: string;
   paragraph: string;
+  photoLink?:string;
 }
 
 export interface ICount  {

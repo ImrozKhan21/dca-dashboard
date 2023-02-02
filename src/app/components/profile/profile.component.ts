@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileDetails = this.section.details[0];
+    console.log('1111 PROFILE DETAILS', this.profileDetails);
   }
 
 }

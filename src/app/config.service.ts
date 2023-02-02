@@ -29,15 +29,15 @@ export class ConfigService {
         pageId = this.getQueryStringValue('pageId', document.referrer);
       }
       dashboardId && sessionStorage.setItem('dashboardId', dashboardId);
-      pageId && sessionStorage.setItem('pageId', pageId);
+      // pageId && sessionStorage.setItem('pageId', pageId);
 
       if (!sessionStorage.getItem('dashboardId') || dashboardId) {
         dashboardId && dashboardId != "null" ? sessionStorage.setItem('dashboardId', dashboardId) : sessionStorage.setItem('dashboardId', '');
       }
 
-      if (!sessionStorage.getItem('pageId') || pageId) {
+   /*   if (!sessionStorage.getItem('pageId') || pageId) {
         pageId && pageId != "null" ? sessionStorage.setItem('pageId', pageId) : sessionStorage.setItem('pageId', '');
-      }
+      }*/
       console.log('session', sessionStorage.getItem('dashboardId'));
     }
   }

@@ -3,6 +3,7 @@
   <ng-container *ngIf="section.format === 'Group Horizontal Bar Chart'">
     <ngx-charts-bar-horizontal-2d
       [results]="data"
+      [scheme]="section.colorScheme ? section.colorScheme : 'cool'"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -21,6 +22,7 @@
     <ngx-charts-bar-vertical-2d
       [view]="view"
       [results]="data"
+      [scheme]="section.colorScheme ? section.colorScheme : 'cool'"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -39,6 +41,7 @@
     <ngx-charts-bar-horizontal
       *ngIf="details[0]['TotalDataSeriesCount'] === '1'"
       [results]="data"
+      [scheme]="section.colorScheme ? section.colorScheme : 'cool'"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -56,6 +59,7 @@
     <ngx-charts-bar-horizontal-stacked
       *ngIf="details[0]['TotalDataSeriesCount'] !== '1'"
       [results]="data"
+      [scheme]="section.colorScheme ? section.colorScheme : 'cool'"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -74,6 +78,7 @@
     <ngx-charts-bar-vertical
       *ngIf="details[0]['TotalDataSeriesCount'] === '1'"
       [results]="data"
+      [scheme]="section.colorScheme ? section.colorScheme : 'cool'"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -88,6 +93,7 @@
     <ngx-charts-bar-vertical-stacked
       *ngIf="details[0]['TotalDataSeriesCount'] !== '1'"
       [results]="data"
+      [scheme]="section.colorScheme ? section.colorScheme : 'cool'"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"

@@ -2,8 +2,7 @@
 
   <ngx-charts-gauge
     [view]="view"
-    [scheme]="colorScheme"
-    [results]="data"
+    [scheme]="section.colorScheme ? section.colorScheme : 'cool'"    [results]="data"
     [legend]="legend"
     [showText]="false"
     [legendPosition]="legendPosition"

@@ -38,7 +38,7 @@ export class DashboardWrapperComponent implements OnInit {
       let pageId = params['pageId'];
       if (this.platformId && !dashboardId) {
         dashboardId = sessionStorage.getItem('dashboardId') as string || 'member-dashboard';
-        pageId = sessionStorage.getItem('pageId') as string || '';
+     //   pageId = sessionStorage.getItem('pageId') as string || '';
       }
       this.setPageDetails(dashboardId, pageId)
     });

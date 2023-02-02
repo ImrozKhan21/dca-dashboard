@@ -4,7 +4,7 @@
   [view]="view"
   [min]="min"
   [max]="max"
-  [scheme]="colorScheme"
+  [scheme]="section.colorScheme ? section.colorScheme : 'cool'"
   [value]="currentValue"
   [previousValue]="previousValue"
   [units]="units"
